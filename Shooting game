@@ -1,0 +1,17 @@
+import time 
+ 
+tutorial_steps = [ 
+    "Welcome to the Shooting Game Tutorial!", 
+    "Step 1: Move your crosshair over the target to AIM.", 
+    "Good job! Keep your aim steady.", 
+    "Step 2: Press 'R' to RELOAD your weapon when ammo is low.", 
+    "Excellent! Always reload while inside the SAFE ZONE.", 
+    "Step 3: Avoid shooting outside the SAFE ZONE — it’s for training only.", 
+    "Tutorial complete! You’re ready for the real battle." 
+] 
+ 
+for step in tutorial_steps: 
+    print(step) 
+    input("Press Enter to continue...") 
+    time.sleep(0.5) 
+(press enter) 
