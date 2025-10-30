@@ -1,0 +1,19 @@
+pip install opencv-python 
+ 
+import cv2 
+image =cv2.imread(r"C:\Users\Deepu\OneDrive\Pictures\Screenshots\tile.png") 
+angle = 0 
+ 
+while True: 
+    rotated = cv2.rotate(image, [cv2.ROTATE_90_CLOCKWISE, 
+cv2.ROTATE_180, cv2.ROTATE_90_COUNTERCLOCKWISE, 0][(angle // 
+90) % 4]) 
+    cv2.imshow("2D Puzzle Tile", rotated) 
+    key = cv2.waitKey(0) 
+    if key == 32: 
+        angle += 90 
+    elif key == 27: 
+        break 
+ 
+cv2.destroyAllWindows() 
+(press spacebar)
