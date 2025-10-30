@@ -1,0 +1,27 @@
+pip install matplotlib numpy 
+ 
+from mpl_toolkits.mplot3d import Axes3D 
+import matplotlib.pyplot as plt 
+import numpy as np 
+ 
+cube = np.array([[0,0,0],[1,0,0],[1,1,0],[0,1,0], 
+                 [0,0,1],[1,0,1],[1,1,1],[0,1,1]]) 
+ 
+translated_cube = cube + np.array([2,3,5]) 
+ 
+edges = [(0,1),(1,2),(2,3),(3,0), 
+         (4,5),(5,6),(6,7),(7,4), 
+         (0,4),(1,5),(2,6),(3,7)] 
+ 
+fig = plt.figure() 
+ax = fig.add_subplot(111, projection='3d') 
+ 
+for e in edges: 
+    ax.plot3D(*zip(cube[e[0]], cube[e[1]]), 'b') 
+for e in edges: 
+    ax.plot3D(*zip(translated_cube[e[0]], translated_cube[e[1]]), 'r') 
+ 
+plt.show() 
+ 
+blue original 
+red translated
