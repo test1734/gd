@@ -1,0 +1,22 @@
+pip install opencv-python 
+ 
+import cv2 
+ 
+player=cv2.imread(r"C:\Users\Deepu\OneDrive\Pictures\Screenshots\logo.png"
+ ) 
+powered = cv2.resize(player, None, fx=2, fy=2, 
+interpolation=cv2.INTER_LINEAR) 
+ 
+cv2.imshow("Player", player) 
+ 
+while True: 
+    key = cv2.waitKey(0) 
+    if key == ord('p'): 
+        cv2.imshow("Player", powered) 
+    elif key == ord('n'): 
+        cv2.imshow("Player", player) 
+    elif key == 27: 
+        break 
+ 
+cv2.destroyAllWindows() 
+(press p and n) 
