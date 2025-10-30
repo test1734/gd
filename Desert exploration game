@@ -1,0 +1,16 @@
+Def desert_dialogue(): 
+    lines = [ 
+        "Guide: Welcome, traveler. The desert is vast and full of secrets.", 
+        "Player: I’m looking for the hidden temple of Solara. Can you help me?", 
+        "Guide: The temple lies beyond the dunes where the sun meets the 
+horizon.", 
+        "Player: But the sandstorm blocks the path. How can I cross?", 
+        "Guide: Seek the ancient compass buried near the old oasis. It points the 
+way.", 
+        "Player: Thank you, guide. I’ll find the compass and uncover Solara’s 
+light." 
+    ] 
+    for line in lines: 
+        input(line ) 
+desert_dialogue() 
+(press enter) 
