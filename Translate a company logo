@@ -1,0 +1,18 @@
+pip install opencv-python numpy 
+ 
+import cv2 
+import numpy as np 
+ 
+logo = cv2.imread(r"C:\Users\Deepu\OneDrive\Pictures\Screenshots\logo.png") 
+ 
+poster = np.ones((600, 800, 3), dtype=np.uint8) * 255 
+ 
+poster[100:100+logo.shape[0], 100:100+logo.shape[1]] = logo 
+ 
+M = np.float32([[1, 0, 150], [0, 1, 80]]) 
+translated = cv2.warpAffine(poster, M, (poster.shape[1], poster.shape[0])) 
+ 
+cv2.imshow("Original Poster", poster) 
+cv2.imshow("Translated Poster", translated) 
+cv2.waitKey(0) 
+cv2.destroyAllWindows()
