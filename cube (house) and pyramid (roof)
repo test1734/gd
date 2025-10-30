@@ -1,0 +1,45 @@
+pip install matplotlib numpy 
+ 
+import matplotlib.pyplot as plt 
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection 
+import numpy as np 
+ 
+cube = np.array([[0,0,0],[1,0,0],[1,1,0],[0,1,0], 
+                 [0,0,1],[1,0,1],[1,1,1],[0,1,1]], dtype=float) 
+s = 1.5 
+cube = (cube - 0.5) * s + 0.5 
+ 
+faces_cube = [[cube[i] for i in [0,1,2,3]], 
+              [cube[i] for i in [4,5,6,7]], 
+              [cube[i] for i in [0,1,5,4]], 
+              [cube[i] for i in [2,3,7,6]], 
+              [cube[i] for i in [1,2,6,5]], 
+              [cube[i] for i in [4,7,3,0]]] 
+ 
+base_top = cube[4:8] 
+center = base_top.mean(axis=0) 
+angle = np.radians(30) 
+R = np.array([[np.cos(angle), -np.sin(angle), 0], 
+              [np.sin(angle),  np.cos(angle), 0], 
+              [0,  0, 1]]) 
+rotated_base = (base_top - center).dot(R.T) + center 
+apex = center + np.array([0,0,0.8*s]) 
+ 
+faces_pyr = [[rotated_base[i] for i in [0,1,2,3]], 
+             [rotated_base[0], rotated_base[1], apex], 
+             [rotated_base[1], rotated_base[2], apex], 
+             [rotated_base[2], rotated_base[3], apex], 
+             [rotated_base[3], rotated_base[0], apex]] 
+ 
+fig = plt.figure() 
+ax = fig.add_subplot(111, projection='3d') 
+ax.add_collection3d(Poly3DCollection(faces_cube, facecolors='lightblue', 
+edgecolors='k', alpha=0.8)) 
+ax.add_collection3d(Poly3DCollection(faces_pyr, facecolors='sandybrown', 
+edgecolors='k', alpha=0.9)) 
+ 
+ax.set_xlim( -0.5, 2 ) 
+ax.set_ylim( -0.5, 2 ) 
+ax.set_zlim( 0, 2 ) 
+ax.set_box_aspect([1,1,1]) 
+plt.show()
