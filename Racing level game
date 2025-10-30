@@ -1,0 +1,8 @@
+def racing_missions(): 
+    print("Racing Level Objectives:") 
+    print("1. Time-Based: Finish the race within 2 minutes to earn a gold 
+trophy.") 
+    print("2. Collection-Based: Collect 10 fuel cans scattered along the track.") 
+    print("3. Checkpoint-Based: Reach all 5 checkpoints before the final lap 
+ends.") 
+racing_missions()
