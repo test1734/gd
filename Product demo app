@@ -1,0 +1,9 @@
+pip install vpython    ( if the installation fails it runs on browser - localhost) 
+ 
+from vpython import box, vector, rate 
+ 
+cube = box(size=vector(2, 2, 2), color=vector(0, 0.6, 1))   
+ 
+while True: 
+    rate(60)   
+    cube.rotate(angle=0.05, axis=vector(0, 1, 0))   
