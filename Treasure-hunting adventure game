@@ -1,0 +1,9 @@
+def treasure_story(): 
+    print("  TREASURE QUEST ") 
+    print("Our hero, Arin the Explorer, sets sail to the Lost Island of Zantara.") 
+    print("His goal: to find the legendary Emerald Crown hidden deep in ancient 
+ruins.") 
+    print("But danger awaits — cursed traps and rival hunters stand in his way.") 
+    print("With courage and wit, Arin must uncover clues and claim the treasure 
+before it’s too late!") 
+treasure_story() 
