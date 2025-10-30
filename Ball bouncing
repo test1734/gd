@@ -1,0 +1,23 @@
+pip install opencv-python numpy 
+ 
+import cv2, numpy as np, time 
+ 
+w, h = 600, 400 
+x, y = 300, 50 
+vx, vy = 3, 0 
+g, rest, r = 0.5, 0.8, 20 
+ 
+while True: 
+    frame = np.ones((h, w, 3), np.uint8) * 30 
+    vy += g 
+    x += vx 
+    y += vy 
+    if y + r >= h: y, vy = h - r, -vy * rest 
+    if y - r <= 0: y, vy = r, -vy * rest 
+    if x - r <= 0 or x + r >= w: vx = -vx * rest 
+    cv2.rectangle(frame, (0, 0), (w - 1, h - 1), (255, 255, 255), 2) 
+    cv2.circle(frame, (int(x), int(y)), r, (0, 0, 255), -1) 
+    cv2.imshow("Bouncing Ball", frame) 
+    if cv2.waitKey(10) & 0xFF == 27: break 
+    time.sleep(0.01) 
+cv2.destroyAllWindows()
