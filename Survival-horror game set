@@ -1,0 +1,12 @@
+def horror_story(): 
+    print("Title: Shadows of the Asylum") 
+    print("Main Character: Dr. Elina Ward, a former surgeon haunted by her 
+past.") 
+    print("Setting: An abandoned hospital where strange noises echo through 
+empty halls.") 
+    print("Conflict: Elina is trapped inside, hunted by the ghosts of her former 
+patients.") 
+    print("Plot Twist: She discovers that she died years ago and is one of the 
+spirits herself.") 
+ 
+horror_story()
