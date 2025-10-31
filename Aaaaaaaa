@@ -1,0 +1,288 @@
+GAME LAB
+
+pip install opencv-python numpy matplotlib vpython
+To run: python filename.py
+
+1) Create a poster design app to translate a company logo by (150, 80) pixels to reposition it on the canvas. Display both original and translated images. 
+
+pip install opencv-python numpy
+
+import cv2
+import numpy as np
+
+logo = cv2.imread(r"C:\Users\Deepu\OneDrive\Pictures\Screenshots\logo.png")
+
+poster = np.ones((600, 800, 3), dtype=np.uint8) * 255
+
+poster[100:100+logo.shape[0], 100:100+logo.shape[1]] = logo
+
+M = np.float32([[1, 0, 150], [0, 1, 80]])
+translated = cv2.warpAffine(poster, M, (poster.shape[1], poster.shape[0]))
+
+cv2.imshow("Original Poster", poster)
+cv2.imshow("Translated Poster", translated)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+2) Develop a concept for a treasure-hunting adventure game. Create a short storyline (4–5 lines) describing the hero, the goal, and a main conflict using python.
+
+def treasure_story():
+    print("  TREASURE QUEST ")
+    print("Our hero, Arin the Explorer, sets sail to the Lost Island of Zantara.")
+    print("His goal: to find the legendary Emerald Crown hidden deep in ancient ruins.")
+    print("But danger awaits — cursed traps and rival hunters stand in his way.")
+    print("With courage and wit, Arin must uncover clues and claim the treasure before it’s too late!")
+treasure_story()
+
+3) Develop a photo viewer. Implementing a zoom-in and zoom-out function on a sample image using scaling factors (1.5×, 0.5×). Show all three versions (original, zoomed-in, zoomed-out).
+
+pip install opencv-python
+
+import cv2
+
+image=cv2.imread(r"C:\Users\Deepu\OneDrive\Pictures\Screenshots\logo.png")
+
+zoom_in = cv2.resize(image, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_LINEAR)
+zoom_out = cv2.resize(image, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
+
+cv2.imshow("Original Image", image)
+cv2.imshow("Zoomed In (1.5x)", zoom_in)
+cv2.imshow("Zoomed Out (0.5x)", zoom_out)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+ 4) Develop a short story outline for a survival-horror game set in an abandoned hospital. Include the main character, setting, conflict, and a plot twist using python.
+
+def horror_story():
+    print("Title: Shadows of the Asylum")
+    print("Main Character: Dr. Elina Ward, a former surgeon haunted by her past.")
+    print("Setting: An abandoned hospital where strange noises echo through empty halls.")
+    print("Conflict: Elina is trapped inside, hunted by the ghosts of her former patients.")
+    print("Plot Twist: She discovers that she died years ago and is one of the spirits herself.")
+
+horror_story()
+
+5) Develop a 2D puzzle game, when the player rotates tiles, the image must rotate 90°. Write a Python script to rotate a tile image at 90°, 180°, 270° and display all rotations. 
+
+pip install opencv-python
+
+import cv2
+image =cv2.imread(r"C:\Users\Deepu\OneDrive\Pictures\Screenshots\tile.png")
+angle = 0
+
+while True:
+    rotated = cv2.rotate(image, [cv2.ROTATE_90_CLOCKWISE, cv2.ROTATE_180, cv2.ROTATE_90_COUNTERCLOCKWISE, 0][(angle // 90) % 4])
+    cv2.imshow("2D Puzzle Tile", rotated)
+    key = cv2.waitKey(0)
+    if key == 32:
+        angle += 90
+    elif key == 27:
+        break
+
+cv2.destroyAllWindows()
+(press spacebar)
+
+6) Design a conversation between the player and a guide NPC for a desert exploration game. Write at least 6 lines of dialogue revealing hints for the next mission using python.
+
+Def desert_dialogue():
+    lines = [
+        "Guide: Welcome, traveler. The desert is vast and full of secrets.",
+        "Player: I’m looking for the hidden temple of Solara. Can you help me?",
+        "Guide: The temple lies beyond the dunes where the sun meets the horizon.",
+        "Player: But the sandstorm blocks the path. How can I cross?",
+        "Guide: Seek the ancient compass buried near the old oasis. It points the way.",
+        "Player: Thank you, guide. I’ll find the compass and uncover Solara’s light."
+    ]
+    for line in lines:
+        input(line )
+desert_dialogue()
+(press enter)
+
+7) Create a 2D platformer, to doubles the size of player upon collecting a power-up. Implement a scaling transformation that enlarges a character sprite by 2× and visualize both states. 
+
+pip install opencv-python
+
+import cv2
+
+player=cv2.imread(r"C:\Users\Deepu\OneDrive\Pictures\Screenshots\logo.png")
+powered = cv2.resize(player, None, fx=2, fy=2, interpolation=cv2.INTER_LINEAR)
+
+cv2.imshow("Player", player)
+
+while True:
+    key = cv2.waitKey(0)
+    if key == ord('p'):
+        cv2.imshow("Player", powered)
+    elif key == ord('n'):
+        cv2.imshow("Player", player)
+    elif key == 27:
+        break
+
+cv2.destroyAllWindows()
+(press p and n)
+
+8) Design objectives for a racing level game. Write three mission tasks such as time-based, collection-based, and checkpoint-based goals using python.
+
+def racing_missions():
+    print("Racing Level Objectives:")
+    print("1. Time-Based: Finish the race within 2 minutes to earn a gold trophy.")
+    print("2. Collection-Based: Collect 10 fuel cans scattered along the track.")
+    print("3. Checkpoint-Based: Reach all 5 checkpoints before the final lap ends.")
+racing_missions()
+
+9) Design a basic 3D environment with a cube and translate it by (2, 3, 5) units to move it from origin. Display both original and translated cube.
+
+pip install matplotlib numpy
+
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import numpy as np
+
+cube = np.array([[0,0,0],[1,0,0],[1,1,0],[0,1,0],
+                 [0,0,1],[1,0,1],[1,1,1],[0,1,1]])
+
+translated_cube = cube + np.array([2,3,5])
+
+edges = [(0,1),(1,2),(2,3),(3,0),
+         (4,5),(5,6),(6,7),(7,4),
+         (0,4),(1,5),(2,6),(3,7)]
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+for e in edges:
+    ax.plot3D(*zip(cube[e[0]], cube[e[1]]), 'b')
+for e in edges:
+    ax.plot3D(*zip(translated_cube[e[0]], translated_cube[e[1]]), 'r')
+
+plt.show()
+
+blue original
+red translated
+
+
+
+10) Build a tutorial level for a shooting game. Prepare a short level design document that teaches players how to reload and aim using safe zones using python.
+
+import time
+
+tutorial_steps = [
+    "Welcome to the Shooting Game Tutorial!",
+    "Step 1: Move your crosshair over the target to AIM.",
+    "Good job! Keep your aim steady.",
+    "Step 2: Press 'R' to RELOAD your weapon when ammo is low.",
+    "Excellent! Always reload while inside the SAFE ZONE.",
+    "Step 3: Avoid shooting outside the SAFE ZONE — it’s for training only.",
+    "Tutorial complete! You’re ready for the real battle."
+]
+
+for step in tutorial_steps:
+    print(step)
+    input("Press Enter to continue...")
+    time.sleep(0.5)
+(press enter)
+
+11) Design a 3D mini-scene with a cube (house) and pyramid (roof). Apply distinct scaling and rotation to each object to form a simple architectural structure. 
+
+pip install matplotlib numpy
+
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+import numpy as np
+
+cube = np.array([[0,0,0],[1,0,0],[1,1,0],[0,1,0],
+                 [0,0,1],[1,0,1],[1,1,1],[0,1,1]], dtype=float)
+s = 1.5
+cube = (cube - 0.5) * s + 0.5
+
+faces_cube = [[cube[i] for i in [0,1,2,3]],
+              [cube[i] for i in [4,5,6,7]],
+              [cube[i] for i in [0,1,5,4]],
+              [cube[i] for i in [2,3,7,6]],
+              [cube[i] for i in [1,2,6,5]],
+              [cube[i] for i in [4,7,3,0]]]
+
+base_top = cube[4:8]
+center = base_top.mean(axis=0)
+angle = np.radians(30)
+R = np.array([[np.cos(angle), -np.sin(angle), 0],
+              [np.sin(angle),  np.cos(angle), 0],
+              [0,  0, 1]])
+rotated_base = (base_top - center).dot(R.T) + center
+apex = center + np.array([0,0,0.8*s])
+
+faces_pyr = [[rotated_base[i] for i in [0,1,2,3]],
+             [rotated_base[0], rotated_base[1], apex],
+             [rotated_base[1], rotated_base[2], apex],
+             [rotated_base[2], rotated_base[3], apex],
+             [rotated_base[3], rotated_base[0], apex]]
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.add_collection3d(Poly3DCollection(faces_cube, facecolors='lightblue', edgecolors='k', alpha=0.8))
+ax.add_collection3d(Poly3DCollection(faces_pyr, facecolors='sandybrown', edgecolors='k', alpha=0.9))
+
+ax.set_xlim( -0.5, 2 )
+ax.set_ylim( -0.5, 2 )
+ax.set_zlim( 0, 2 )
+ax.set_box_aspect([1,1,1])
+plt.show()
+
+12) Develop a short animation of a ball bouncing inside a box with gravity and restitution effect. Use frame-based rendering.
+
+pip install opencv-python numpy
+
+import cv2, numpy as np, time
+
+w, h = 600, 400
+x, y = 300, 50
+vx, vy = 3, 0
+g, rest, r = 0.5, 0.8, 20
+
+while True:
+    frame = np.ones((h, w, 3), np.uint8) * 30
+    vy += g
+    x += vx
+    y += vy
+    if y + r >= h: y, vy = h - r, -vy * rest
+    if y - r <= 0: y, vy = r, -vy * rest
+    if x - r <= 0 or x + r >= w: vx = -vx * rest
+    cv2.rectangle(frame, (0, 0), (w - 1, h - 1), (255, 255, 255), 2)
+    cv2.circle(frame, (int(x), int(y)), r, (0, 0, 255), -1)
+    cv2.imshow("Bouncing Ball", frame)
+    if cv2.waitKey(10) & 0xFF == 27: break
+    time.sleep(0.01)
+cv2.destroyAllWindows()
+
+
+13) Create a 3D product demo app, where an object spins around for display. Animate a cube rotating continuously around its Y-axis using incremental rotation.
+
+pip install vpython    ( if the installation fails it runs on browser - localhost)
+
+from vpython import box, vector, rate
+
+cube = box(size=vector(2, 2, 2), color=vector(0, 0.6, 1))  
+
+while True:
+    rate(60)  
+    cube.rotate(angle=0.05, axis=vector(0, 1, 0))  
+
+ 
+14) Build a photo filter for a mobile game. Convert an image from RGB to Grayscale and apply it to simulate a “night vision” filter.
+
+pip install opencv-python numpy
+
+import cv2
+import numpy as np
+
+img = cv2.imread(r"C:\Users\Deepu\OneDrive\Pictures\Screenshots\logo.png")
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+night = cv2.applyColorMap(gray, cv2.COLORMAP_SUMMER)  
+night = cv2.addWeighted(night, 1.5, np.zeros_like(night), 0, 0)  
+
+cv2.imshow("Original", img)
+cv2.imshow("Night Vision Filter", night)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
