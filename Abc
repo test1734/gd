@@ -1,0 +1,173 @@
+2D CODES
+pip install opencv-python numpy
+1.	Create a poster design app to translate a company logo by (150, 80) pixels to reposition it on the canvas. Display both original and translated images.
+import cv2
+import numpy as np
+logo = cv2.imread("a.jpg")
+logo = cv2.resize(logo, (300,300))
+poster = np.ones((600, 800, 3), dtype=np.uint8) * 255 poster[100:100+logo.shape[0], 100:100+logo.shape[1]] = logo M = np.float32([[1, 0, 150], [0, 1, 80]])
+translated = cv2.warpAffine(poster, M, (poster.shape[1], poster.shape[0])) cv2.imshow("Original Poster", poster)
+cv2.imshow("Translated Poster", translated) cv2.waitKey(0)
+cv2.destroyAllWindows()
+2.	Develop a photo viewer. Implementing a zoom-in and zoom-out function on a sample image using scaling factors (1.5×, 0.5×). Show all three versions (original, zoomed-in, zoomed-out).
+import cv2 image=cv2.imread(r"a.jpg")
+zoom_in = cv2.resize(image, None, fx=1.5, fy=1.5, interpolation=cv2.INTER_LINEAR)
+zoom_out = cv2.resize(image, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA) cv2.imshow("Original Image", image) cv2.imshow("Zoomed In (1.5x)", zoom_in) cv2.imshow("Zoomed Out (0.5x)", zoom_out) cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+3.	Develop a 2D puzzle game, when the player rotates tiles, the image must rotate 90°. Write a Python script to rotate a tile image at 90°, 180°, 270° and display all rotations.
+import cv2
+image =cv2.imread(r"a.jpg") angle = 0
+while True:
+rotated = cv2.rotate(image, [cv2.ROTATE_90_CLOCKWISE,cv2.ROTATE_180, cv2.ROTATE_90_COUNTERCLOCKWISE, 0][(angle //90) % 4])
+ 
+cv2.imshow("2D Puzzle Tile", rotated) key = cv2.waitKey(0)
+if key == 32:
+angle += 90 elif key == 27:
+break cv2.destroyAllWindows()
+(press spacebar)
+
+4.	Create a 2D platformer, to doubles the size of player upon collecting a power-up. Implement a scaling transformation that enlarges a character sprite by 2× and visualize both states.
+import cv2 player=cv2.imread(r"a.jpg")
+powered = cv2.resize(player, None, fx=2, fy=2, interpolation=cv2.INTER_LINEAR) cv2.imshow("Player", player)
+while True:
+key = cv2.waitKey(0) if key == ord('p'):
+cv2.imshow("Player", powered) elif key == ord('n'):
+cv2.imshow("Player", player) elif key == 27:
+break cv2.destroyAllWindows()
+(press p and n)
+
+3D CODES
+pip install matplotlib numpy vpython
+1.	Design a basic 3D environment with a cube and translate it by (2, 3, 5) units to move it from origin. Display both original and translated cube.
+from mpl_toolkits.mplot3d import Axes3D import matplotlib.pyplot as plt
+import numpy as np
+cube = np.array([[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0,0,1],[1,0,1],[1,1,1],[0,1,1]])
+translated_cube = cube + np.array([2,3,5])
+ 
+edges = [(0,1),(1,2),(2,3),(3,0),(4,5),(5,6),(6,7),(7,4),(0,4),(1,5),(2,6),(3,7)]
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d') for e in edges:
+ax.plot3D(*zip(cube[e[0]], cube[e[1]]), 'b') for e in edges:
+ax.plot3D(*zip(translated_cube[e[0]], translated_cube[e[1]]), 'r') plt.show()
+(blue original, red translated)
+
+2.	Design a 3D mini-scene with a cube (house) and pyramid (roof). Apply distinct scaling and rotation to each object to form a simple architectural structure.
+import numpy as np, matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection cube = np.array([[0,0,0],[1,0,0],[1,1,0],[0,1,0],
+[0,0,1],[1,0,1],[1,1,1],[0,1,1]], float)
+cube = (cube-0.5)*1.5 + 0.5
+F = [(0,1,2,3),(4,5,6,7),(0,1,5,4),(2,3,7,6),(1,2,6,5),(4,7,3,0)]
+faces_cube = [[cube[i] for i in f] for f in F] top = cube[4:8]; c = top.mean(0)
+a = np.deg2rad(30); R = np.array([[np.cos(a),-np.sin(a),0],[np.sin(a),np.cos(a),0],[0,0,1]]) top = (top-c)@R.T + c
+apex = c + [0,0,1.0]
+faces_pyr = [[top[i] for i in (0,1,2,3)], [top[0],top[1],apex],[top[1],top[2],apex],
+[top[2],top[3],apex],[top[3],top[0],apex]] ax = plt.figure().add_subplot(111, projection='3d')
+ax.add_collection3d(Poly3DCollection(faces_cube, facecolors='lightblue', edgecolors='k', alpha=.85))
+ax.add_collection3d(Poly3DCollection(faces_pyr, facecolors='sandybrown', edgecolors='k', alpha=.95))
+ax.set_box_aspect([1,1,1]); plt.show()
+
+3.	Create a 3D product demo app, where an object spins around for display. Animate a cube rotating continuously around its Y-axis using incremental rotation.
+from vpython import box, vector, rate
+cube = box(size=vector(2, 2, 2), color=vector(0, 0.6, 1)) while True:
+rate(60)
+ 
+cube.rotate(angle=0.05, axis=vector(0, 1, 0))
+
+OTHER CODES
+pip install opencv-python numpy
+1.	Develop a short animation of a ball bouncing inside a box with gravity and restitution effect. Use frame-based rendering.
+import cv2, numpy as np, time w,h=600,400 x,y,vx,vy,r=300,50,3,0,20
+g,rest=0.5,0.8 while True:
+f=np.full((h,w,3),30,np.uint8) vy+=g; x+=vx; y+=vy
+if y+r>=h: y,vy=h-r,-vy*rest if y-r<=0: y,vy=r,-vy*rest
+if x-r<=0 or x+r>=w: vx=-vx*rest cv2.circle(f,(int(x),int(y)),r,(0,0,255),-1) cv2.imshow("Bounce",f)
+if cv2.waitKey(10)==27:break time.sleep(0.01)
+cv2.destroyAllWindows()
+
+2.	Build a photo filter for a mobile game. Convert an image from RGB to Grayscale and apply it to simulate a “night vision” filter.
+import cv2
+import numpy as np
+img = cv2.imread(r"a.jpg")
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+night = cv2.applyColorMap(gray, cv2.COLORMAP_SUMMER) night = cv2.addWeighted(night, 1.5, np.zeros_like(night), 0, 0) cv2.imshow("Original", img)
+cv2.imshow("Night Vision Filter", night) cv2.waitKey(0) cv2.destroyAllWindows()
+
+DIALOGUE CODES
+1.	Develop a concept for a treasure-hunting adventure game. Create a short storyline (4–5
+ 
+lines) describing the hero, the goal, and a main conflict using python.
+import pygame,sys pygame.init()
+scr=pygame.display.set_mode((800,500)) font=pygame.font.SysFont(None,30) dialogue=[
+"Arin the explorer sails to Lost Island of Zantara.",
+"Goal: Find the legendary Emerald Crown in ancient ruins.", "But cursed traps guard the treasure everywhere.",
+"Rival hunters are also racing to steal it first.",
+"Arin must solve clues and reach crown before it's too late!"
+]
+i=0
+while True:
+for e in pygame.event.get():
+if e.type==pygame.QUIT:pygame.quit();sys.exit()
+if e.type==pygame.KEYDOWN and e.key==pygame.K_SPACE: i+=1
+if i==len(dialogue):pygame.quit();sys.exit() scr.fill((0,0,0)) scr.blit(font.render(dialogue[i],1,(255,255,255)),(50,250)) pygame.display.update()
+(Press Spacebar)
+
+2.	Develop a short story outline for a survival-horror game set in an abandoned hospital. Include the main character, setting, conflict, and a plot twist using python.
+import pygame,sys pygame.init()
+scr=pygame.display.set_mode((800,500)) font=pygame.font.SysFont(None,30) dialogue=[
+"Title: Shadows of the Asylum",
+"Dr. Elina Ward, a surgeon, is haunted by her dark past.", "She explores an abandoned hospital with eerie noises.", "Ghosts of her former patients trap her inside forever.", "Twist: Elina realizes she actually died years ago!"
+]
+i=0
+while True:
+for e in pygame.event.get():
+ 
+if e.type==pygame.QUIT:pygame.quit();sys.exit()
+if e.type==pygame.KEYDOWN and e.key==pygame.K_SPACE: i+=1
+if i==len(dialogue):pygame.quit();sys.exit() scr.fill((0,0,0)) scr.blit(font.render(dialogue[i],1,(255,255,255)),(50,250)) pygame.display.update()
+(Press Spacebar)
+
+3.	Design a conversation between the player and a guide NPC for a desert exploration game. Write at least 6 lines of dialogue revealing hints for the next mission using python.
+import pygame,sys pygame.init()
+scr=pygame.display.set_mode((800,500)) font=pygame.font.SysFont(None,30) dialogue=[
+"Guide: Welcome traveler, this desert holds many secrets.", "Player: I'm searching for the hidden Temple of Solara.", "Guide: It lies beyond the dunes where the sun meets horizon.", "Player: But a sandstorm is blocking the way!",
+"Guide: Find the ancient compass near the old oasis.", "Player: I will find it... and unlock Solara's light!"
+]
+i=0
+while True:
+for e in pygame.event.get():
+if e.type==pygame.QUIT:pygame.quit();sys.exit()
+if e.type==pygame.KEYDOWN and e.key==pygame.K_SPACE: i+=1
+if i==len(dialogue):pygame.quit();sys.exit() scr.fill((0,0,0)) scr.blit(font.render(dialogue[i],1,(255,255,255)),(50,250)) pygame.display.update()
+(Press Spacebar)
+
+4.	Design objectives for a racing level game. Write three mission tasks such as time-based, collection-based, and checkpoint-based goals using python.
+import pygame,sys pygame.init()
+ 
+scr=pygame.display.set_mode((800,500)) font=pygame.font.SysFont(None,30) dialogue=[
+"Racing Level Objectives:",
+"Time Mission : Finish race within 2 minutes (Gold Trophy).", "Collect Mission : Collect 10 fuel cans on the track.", "Checkpoint Mission : Reach all 5 checkpoints before final lap."
+]
+i=0
+while True:
+for e in pygame.event.get():
+if e.type==pygame.QUIT:pygame.quit();sys.exit()
+if e.type==pygame.KEYDOWN and e.key==pygame.K_SPACE: i+=1
+if i==len(dialogue):pygame.quit();sys.exit() scr.fill((0,0,0)) scr.blit(font.render(dialogue[i],1,(255,255,255)),(50,250)) pygame.display.update()
+(Press Spacebar)
+
+5.	Build a tutorial level for a shooting game. Prepare a short level design document that teaches players how to reload and aim using safe zones using python.
+import pygame,sys pygame.init()
+scr=pygame.display.set_mode((800,500)) font=pygame.font.SysFont(None,30) dialogue=[
+"Shooting Tutorial: Welcome Agent!", "Step 1: Move crosshair on target to AIM.",
+"Step 2: Press R to reload when ammo is low.", "Reload only when inside the SAFE ZONE.", "Step 3: Do NOT shoot outside SAFE ZONE.", "Tutorial complete! Ready for real battle!"
+]
+i=0
+while True:
+for e in pygame.event.get():
+if e.type==pygame.QUIT:pygame.quit();sys.exit()
+if e.type==pygame.KEYDOWN and e.key==pygame.K_SPACE: i+=1
+if i==len(dialogue):pygame.quit();sys.exit()
+ 
+scr.fill((0,0,0)) scr.blit(font.render(dialogue[i],1,(255,255,255)),(50,250)) pygame.display.update()
+(Press Spacebar)
