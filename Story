@@ -1,0 +1,95 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+screen = pygame.display.set_mode((800, 500))
+pygame.display.set_caption("Operation Black Cipher - Dialogue Scene")
+
+# Colors
+BLACK = (10, 10, 10)
+WHITE = (255, 255, 255)
+GRAY = (40, 40, 40)
+BLUE = (80, 170, 255)
+GREEN = (0, 220, 160)
+YELLOW = (255, 220, 80)
+
+# Fonts
+font_title = pygame.font.SysFont("Consolas", 28, bold=True)
+font_dialogue = pygame.font.SysFont("Consolas", 20)
+font_prompt = pygame.font.SysFont("Consolas", 16, italic=True)
+
+# Dialogue sequence
+dialogues = [
+    ("Detective", "AI-7, pull up the surveillance logs from last night."),
+    ("AI-7", "Accessing system... please wait...\nLogs found — time range 10:32 PM to 11:47 PM."),
+    ("Detective", "Any unusual movement near the museum vault?"),
+    ("AI-7", "Motion detected at 11:15 PM.\nHeat signature matches an insider profile."),
+    ("Detective", "An insider? Run a cross-check with employee records."),
+    ("AI-7", "Cross-check complete.\nOnly one employee remained after hours — Technician ID #0412."),
+    ("Detective", "That’s our next clue.\nTrack technician #0412’s last known location."),
+    ("AI-7", "Tracking signal... last ping received near the old subway tunnel."),
+    ("Detective", "The subway tunnel... looks like our hunt begins there.")
+]
+
+# Background (you can replace with an image if desired)
+background = pygame.Surface(screen.get_size())
+background.fill(BLACK)
+
+# Dialogue box setup
+dialogue_box = pygame.Rect(50, 320, 700, 150)
+
+# Index tracker
+dialogue_index = 0
+
+clock = pygame.time.Clock()
+
+def draw_dialogue(speaker, text):
+    # Draw background
+    screen.blit(background, (0, 0))
+    
+    # Title
+    title_text = font_title.render("CASE FILE: Operation Black Cipher", True, YELLOW)
+    screen.blit(title_text, (180, 30))
+
+    # Dialogue box
+    pygame.draw.rect(screen, GRAY, dialogue_box, border_radius=12)
+    pygame.draw.rect(screen, WHITE, dialogue_box, 2, border_radius=12)
+
+    # Speaker name
+    speaker_color = BLUE if speaker == "Detective" else GREEN
+    speaker_text = font_title.render(speaker, True, speaker_color)
+    screen.blit(speaker_text, (70, 340))
+
+    # Dialogue lines
+    lines = text.split("\n")
+    for i, line in enumerate(lines):
+        line_surface = font_dialogue.render(line, True, WHITE)
+        screen.blit(line_surface, (70, 380 + i * 25))
+
+    # Prompt
+    prompt_text = font_prompt.render("Press SPACE or ENTER to continue...", True, (180, 180, 180))
+    screen.blit(prompt_text, (480, 470))
+
+    pygame.display.flip()
+
+# Game loop
+running = True
+while running:
+    clock.tick(30)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        
+        if event.type == pygame.KEYDOWN:
+            if event.key in (pygame.K_RETURN, pygame.K_SPACE):
+                dialogue_index += 1
+                if dialogue_index >= len(dialogues):
+                    running = False
+
+    if dialogue_index < len(dialogues):
+        speaker, text = dialogues[dialogue_index]
+        draw_dialogue(speaker, text)
+
+pygame.quit()
+sys.exit()
