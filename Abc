@@ -1,3 +1,21 @@
+To run
+
+python3 -m venv myenv
+source myenv/bin/activate
+
+(Install all the necessary  libraries)
+python3 filename.py
+
+
+To deactivate 
+
+deactivate
+
+If you want the command for installing venv (only if missing):
+
+sudo apt install python3-venv
+
+
 2D CODES
 pip install opencv-python numpy
 1.	Create a poster design app to translate a company logo by (150, 80) pixels to reposition it on the canvas. Display both original and translated images.
